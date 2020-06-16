@@ -4,7 +4,7 @@ class RestaurantsController < ApplicationController
   end
 
   def show
-    @restaurant = Restaurant.find(params[:id])
+    set_restaurant
     @review = Review.new
   end
 
@@ -18,9 +18,15 @@ class RestaurantsController < ApplicationController
   end
 
   def destroy
+    set_restaurant
+    @restaurant.destroy
   end
 
   private
+
+  def set_restaurant
+    @restaurant = Restaurant.find(params[:id])
+  end
 
   def strong_params
     params.require(:restaurant).permit(Restaurant::STRONG_PARAMS)
