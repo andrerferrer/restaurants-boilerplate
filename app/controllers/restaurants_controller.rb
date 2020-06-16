@@ -13,6 +13,8 @@ class RestaurantsController < ApplicationController
   end
 
   def create
+    @restaurant = Restaurant.new strong_params
+    @restaurant.save ? redirect_to(@restaurant) : render(:new)
   end
 
   def destroy
@@ -21,5 +23,6 @@ class RestaurantsController < ApplicationController
   private
 
   def strong_params
+    params.require(:restaurant).permit(Restaurant::STRONG_PARAMS)
   end
 end
